@@ -118,9 +118,8 @@ The frontend talks to the backend via `/api/*` routes, proxied by Vite (`fronten
 
 1. **Backend**
    - `cd backend`
-   - Create `.env`:
+   - Create `.env` (or copy from `backend/.env.example` and fill in values):
      - `MONGO_URI=mongodb://localhost:27017/expense_sharing`
-     
      - `JWT_SECRET=some-strong-secret`
    - Install & run:
      - `npm install`
@@ -130,6 +129,34 @@ The frontend talks to the backend via `/api/*` routes, proxied by Vite (`fronten
    - `npm install`
    - `npm run dev`
    - Open the URL printed by Vite (usually `http://localhost:3000`).
+
+---
+
+## 🚀 Deploying to Render (two options)
+
+**Option A — Deploy Frontend and Backend as separate Render services (recommended)**
+
+- Frontend (Static Site)
+  - Create a *Static Site* on Render
+  - Build command: `npm ci && npm run build`
+  - Publish directory: `frontend/dist`
+- Backend (Web Service)
+  - Create a *Web Service* on Render
+  - Root directory: `backend`
+  - Build command: `npm ci`
+  - Start command: `npm start`
+  - Add environment variables on Render (e.g., `MONGO_URI`, `JWT_SECRET`)
+
+**Option B — Single Web Service serving static frontend**
+
+- If you prefer a single service, the backend will automatically serve the frontend when `frontend/dist` exists.
+- The backend `package.json` includes a `postinstall` script that runs on deploy to build the frontend; this allows deployment as a single Node web service. On Render, set the service root to `backend` and ensure `MONGO_URI` and `JWT_SECRET` are configured in the dashboard.
+
+**Notes & tips**
+- Keep secrets out of the repo; use Render's environment variables to configure production values.
+- Use `backend/.env.example` as a template for local `.env` files.
+- The repository includes an example `render.yaml` with a basic configuration you can use or adapt in Render's Dashboard.
+
 
 This design demonstrates MVC separation on the backend, proper auth and access control, three split strategies (equal/exact/percent), balance simplification (who owes whom), and an interactive, modern UI that lets each user see **how much they owe, how much others owe them, and settle dues**.
 

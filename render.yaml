@@ -1,0 +1,19 @@
+# Example Render manifest to deploy both frontend (static site) and backend (web service).
+# Edit names, regions, plans, and environment variables in the Render dashboard as needed.
+services:
+  - type: web_service
+    name: credresolve-backend
+    env: node
+    plan: free
+    region: oregon
+    root: backend
+    buildCommand: "cd frontend && npm ci && npm run build && cd backend && npm ci"
+    startCommand: "npm start"
+
+  - type: static_site
+    name: credresolve-frontend
+    env: static
+    plan: free
+    buildCommand: "npm ci && npm run build"
+    publishPath: "frontend/dist"
+    root: .
