@@ -161,3 +161,4 @@ The frontend talks to the backend via `/api/*` routes, proxied by Vite (`fronten
 This design demonstrates MVC separation on the backend, proper auth and access control, three split strategies (equal/exact/percent), balance simplification (who owes whom), and an interactive, modern UI that lets each user see **how much they owe, how much others owe them, and settle dues**.
 
 
+Site Adress: https://credresolve12.onrender.com
